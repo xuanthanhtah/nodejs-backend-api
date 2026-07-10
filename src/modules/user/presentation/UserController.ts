@@ -20,7 +20,12 @@ export class UserController {
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = await this.createUserUseCase.execute(req.body);
-      return ResponseFormatter.success(res, user, 'User registered successfully', HttpStatusCode.CREATED);
+      return ResponseFormatter.success(
+        res,
+        user,
+        'User registered successfully',
+        HttpStatusCode.CREATED,
+      );
     } catch (error) {
       next(error);
     }
@@ -38,7 +43,12 @@ export class UserController {
   create = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = await this.createUserUseCase.execute(req.body);
-      return ResponseFormatter.success(res, user, 'User created successfully', HttpStatusCode.CREATED);
+      return ResponseFormatter.success(
+        res,
+        user,
+        'User created successfully',
+        HttpStatusCode.CREATED,
+      );
     } catch (error) {
       next(error);
     }
@@ -77,12 +87,18 @@ export class UserController {
   list = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const result = await this.listUsersUseCase.execute(req.query);
-      return ResponseFormatter.success(res, result.items, 'Users retrieved successfully', HttpStatusCode.OK, {
-        total: result.total,
-        page: result.page,
-        limit: result.limit,
-        totalPages: result.totalPages,
-      });
+      return ResponseFormatter.success(
+        res,
+        result.items,
+        'Users retrieved successfully',
+        HttpStatusCode.OK,
+        {
+          total: result.total,
+          page: result.page,
+          limit: result.limit,
+          totalPages: result.totalPages,
+        },
+      );
     } catch (error) {
       next(error);
     }

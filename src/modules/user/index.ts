@@ -1,32 +1,18 @@
-import { prisma } from '../../infrastructure/database/prisma';
-import { PrismaUserRepository } from './infrastructure/PrismaUserRepository';
-import { CreateUserUseCase } from './application/CreateUserUseCase';
-import { UpdateUserUseCase } from './application/UpdateUserUseCase';
-import { DeleteUserUseCase } from './application/DeleteUserUseCase';
-import { GetUserUseCase, ListUsersUseCase } from './application/ReadUserUseCases';
-import { LoginUseCase } from './application/LoginUseCase';
-import { UserController } from './presentation/UserController';
-import { UserRoutes } from './presentation/UserRoutes';
+export * from './domain/entities/user.entity';
+export * from './domain/value-objects/user-id.value-object';
+export * from './domain/value-objects/email.value-object';
+export * from './domain/repositories/user.repository';
+export * from './domain/errors/user.errors';
 
-// Dependency Injection setup for the User Module
-const userRepository = new PrismaUserRepository(prisma);
+export * from './application/dto/user.dto';
+export * from './application/use-cases/create-user.use-case';
+export * from './application/use-cases/get-user.use-case';
+export * from './application/use-cases/update-user.use-case';
+export * from './application/use-cases/delete-user.use-case';
 
-const createUserUseCase = new CreateUserUseCase(userRepository);
-const updateUserUseCase = new UpdateUserUseCase(userRepository);
-const deleteUserUseCase = new DeleteUserUseCase(userRepository);
-const getUserUseCase = new GetUserUseCase(userRepository);
-const listUsersUseCase = new ListUsersUseCase(userRepository);
-const loginUseCase = new LoginUseCase(userRepository);
+export * from './infrastructure/persistence/repositories/prisma-user.repository';
+export * from './infrastructure/persistence/mappers/user.mapper';
 
-const userController = new UserController(
-  createUserUseCase,
-  updateUserUseCase,
-  deleteUserUseCase,
-  getUserUseCase,
-  listUsersUseCase,
-  loginUseCase,
-);
-
-const userRoutes = new UserRoutes(userController);
-
-export { userRoutes };
+export * from './presentation/http/controllers/user.controller';
+export * from './presentation/http/routes/user.routes';
+export * from './presentation/http/requests/user.requests';

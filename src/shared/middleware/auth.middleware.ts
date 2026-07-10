@@ -11,10 +11,10 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 
     const token = authHeader.split(' ')[1];
     const decoded = JwtService.verifyAccessToken(token);
-    
+
     // Attach user payload to request
-    (req as any).user = decoded;
-    
+    (req as Request & { user?: unknown }).user = decoded;
+
     next();
   } catch (error) {
     next(new UnauthorizedError('Invalid or expired token'));

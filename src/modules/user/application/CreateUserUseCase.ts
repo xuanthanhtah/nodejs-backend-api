@@ -4,10 +4,17 @@ import { UserMapper } from '../mapper/UserMapper';
 import { ConflictError } from '../../../shared/exceptions/ApiErrors';
 import { PasswordService } from '../../../shared/utils/auth-service';
 
+export interface CreateUserDTO {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
+
 export class CreateUserUseCase {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  async execute(data: any): Promise<UserResponseDTO> {
+  async execute(data: CreateUserDTO): Promise<UserResponseDTO> {
     const existingUser = await this.userRepository.findByEmail(data.email);
     if (existingUser) {
       throw new ConflictError('Email already in use');

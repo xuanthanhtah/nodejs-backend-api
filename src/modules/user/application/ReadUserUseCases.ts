@@ -24,7 +24,7 @@ export class ListUsersUseCase {
     const paginatedUsers = await this.userRepository.findAll(query);
     return {
       ...paginatedUsers,
-      items: paginatedUsers.items.map(user => UserMapper.toDTO(user)), // Wait, items are already domain objects. Mapper in repo mapped to Domain. Wait, repo returns PaginatedResult<User> (Domain User). Here we map to DTO.
+      items: paginatedUsers.items.map((user) => UserMapper.toDTO(user)), // Wait, items are already domain objects. Mapper in repo mapped to Domain. Wait, repo returns PaginatedResult<User> (Domain User). Here we map to DTO.
     };
   }
 }

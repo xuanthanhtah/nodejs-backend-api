@@ -14,8 +14,8 @@ export class BadRequestError extends BaseError {
 }
 
 export class ValidationError extends BaseError {
-  public readonly errors: any[];
-  constructor(message: string = 'Validation error', errors: any[] = []) {
+  public readonly errors: unknown[];
+  constructor(message: string = 'Validation error', errors: unknown[] = []) {
     super(message, HttpStatusCode.BAD_REQUEST);
     this.errors = errors;
   }

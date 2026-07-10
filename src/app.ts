@@ -10,7 +10,8 @@ import { env } from './config/env';
 import { logger } from './infrastructure/logger/winston.logger';
 import { globalErrorHandler } from './shared/middleware/error.middleware';
 import { requestIdMiddleware } from './shared/middleware/request-id.middleware';
-import { userRoutes } from './modules/user';
+import { createUserRoutes } from './modules/user';
+import { prisma } from './infrastructure/database/prisma';
 
 export class App {
   public app: Application;
@@ -18,8 +19,8 @@ export class App {
   constructor() {
     this.app = express();
     this.initializeMiddlewares();
-    this.initializeRoutes();
     this.initializeSwagger();
+    this.initializeRoutes();
     this.initializeErrorHandling();
   }
 
@@ -27,8 +28,8 @@ export class App {
     // Security
     this.app.use(helmet());
     this.app.use(cors());
-    this.app.use(compression() as any);
-    
+    this.app.use(compression() as unknown as express.RequestHandler);
+
     // Body parsing
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
@@ -60,16 +61,20 @@ export class App {
     });
 
     // API Versioning & Routes
-    this.app.use('/api/v1/users', userRoutes.router);
+    this.app.use('/api/v1/users', createUserRoutes(prisma));
 
     // 404 Route
-    this.app.use((req: Request, res: Response, next: NextFunction) => {
+    this.app.use((req: Request, res: Response, _next: NextFunction) => {
       res.status(404).json({ success: false, message: 'API route not found' });
     });
   }
 
   private initializeSwagger() {
-    this.app.use('/api-docs', swaggerUi.serve as any, swaggerUi.setup(swaggerDocument) as any);
+    this.app.use(
+      '/api-docs',
+      swaggerUi.serve as unknown as express.RequestHandler[],
+      swaggerUi.setup(swaggerDocument) as unknown as express.RequestHandler,
+    );
   }
 
   private initializeErrorHandling() {

@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { logger } from '../logger/winston.logger';
 
 class Database {
@@ -18,12 +18,22 @@ class Database {
       });
 
       if (process.env.NODE_ENV === 'development') {
-        (Database.instance as any).$on('query', (e: any) => {
+        (
+          Database.instance as PrismaClient<
+            Prisma.PrismaClientOptions,
+            'query' | 'error' | 'info' | 'warn'
+          >
+        ).$on('query', (e: Prisma.QueryEvent) => {
           logger.debug(`Query: ${e.query}`);
         });
       }
 
-      (Database.instance as any).$on('error', (e: any) => {
+      (
+        Database.instance as PrismaClient<
+          Prisma.PrismaClientOptions,
+          'query' | 'error' | 'info' | 'warn'
+        >
+      ).$on('error', (e: Prisma.LogEvent) => {
         logger.error(`DB Error: ${e.message}`);
       });
     }

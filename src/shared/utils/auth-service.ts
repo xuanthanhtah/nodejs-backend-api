@@ -14,23 +14,23 @@ export class PasswordService {
 }
 
 export class JwtService {
-  static generateAccessToken(payload: any): string {
+  static generateAccessToken(payload: Record<string, unknown>): string {
     return jsonwebtoken.sign(payload, env.JWT_ACCESS_SECRET, {
-      expiresIn: env.JWT_ACCESS_EXPIRES_IN as any,
+      expiresIn: env.JWT_ACCESS_EXPIRES_IN as jsonwebtoken.SignOptions['expiresIn'],
     });
   }
 
-  static generateRefreshToken(payload: any): string {
+  static generateRefreshToken(payload: Record<string, unknown>): string {
     return jsonwebtoken.sign(payload, env.JWT_REFRESH_SECRET, {
-      expiresIn: env.JWT_REFRESH_EXPIRES_IN as any,
+      expiresIn: env.JWT_REFRESH_EXPIRES_IN as jsonwebtoken.SignOptions['expiresIn'],
     });
   }
 
-  static verifyAccessToken(token: string): any {
+  static verifyAccessToken(token: string): string | jsonwebtoken.JwtPayload {
     return jsonwebtoken.verify(token, env.JWT_ACCESS_SECRET);
   }
 
-  static verifyRefreshToken(token: string): any {
+  static verifyRefreshToken(token: string): string | jsonwebtoken.JwtPayload {
     return jsonwebtoken.verify(token, env.JWT_REFRESH_SECRET);
   }
 }

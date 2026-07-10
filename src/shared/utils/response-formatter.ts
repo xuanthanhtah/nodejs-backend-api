@@ -7,7 +7,7 @@ export class ResponseFormatter {
     data: T,
     message: string = 'Success',
     statusCode: number = 200,
-    meta?: any,
+    meta?: Record<string, unknown>,
   ) {
     const response: ApiResponse<T> = {
       success: true,
@@ -22,7 +22,7 @@ export class ResponseFormatter {
     res: Response,
     message: string,
     statusCode: number = 500,
-    errors?: any[],
+    errors?: unknown[],
     code?: string,
   ) {
     const response: ApiResponse = {

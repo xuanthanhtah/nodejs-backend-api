@@ -9,7 +9,7 @@ export const globalErrorHandler = (
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) => {
   logger.error(`[Error]: ${err.message}`, {
     stack: err.stack,
@@ -27,6 +27,6 @@ export const globalErrorHandler = (
 
   const isDev = env.NODE_ENV === 'development';
   const message = isDev ? err.message : 'Internal Server Error';
-  
+
   return ResponseFormatter.error(res, message, 500);
 };
