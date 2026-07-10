@@ -3,6 +3,7 @@ import { User } from '../../domain/entities/user.entity';
 import { Email } from '../../domain/value-objects/email.value-object';
 import { UserEmailAlreadyExistsError } from '../../domain/errors/user.errors';
 import { UserResponseDto } from '../dto/user.dto';
+import { PasswordService } from '../../../../shared/utils/auth-service';
 
 export interface CreateUserCommand {
   email: string;
@@ -22,9 +23,11 @@ export class CreateUserUseCase {
       throw new UserEmailAlreadyExistsError(email.value);
     }
 
+    const hashedPassword = await PasswordService.hash(command.password);
+
     const user = User.create({
       email: command.email,
-      password: command.password, // In a real scenario, should hash this password
+      password: hashedPassword,
       displayName: command.displayName,
       role: command.role,
     });
