@@ -4,8 +4,8 @@ import { Email } from '../value-objects/email.value-object';
 export interface UserProps {
   email: Email;
   password: string;
-  firstName: string;
-  lastName: string;
+  displayName: string;
+  role: string;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -21,8 +21,8 @@ export class User {
     id?: string;
     email: string;
     password: string;
-    firstName: string;
-    lastName: string;
+    displayName: string;
+    role: string;
     isActive?: boolean;
     createdAt?: Date;
     updatedAt?: Date;
@@ -31,8 +31,8 @@ export class User {
     return new User(UserId.create(input.id), {
       email: Email.create(input.email),
       password: input.password,
-      firstName: input.firstName.trim(),
-      lastName: input.lastName.trim(),
+      displayName: input.displayName.trim(),
+      role: input.role.trim(),
       isActive: input.isActive ?? true,
       createdAt: input.createdAt ?? now,
       updatedAt: input.updatedAt ?? now,
@@ -51,12 +51,12 @@ export class User {
     return this.props.password;
   }
 
-  getFirstName(): string {
-    return this.props.firstName;
+  getDisplayName(): string {
+    return this.props.displayName;
   }
 
-  getLastName(): string {
-    return this.props.lastName;
+  getRole(): string {
+    return this.props.role;
   }
 
   isActive(): boolean {
@@ -71,9 +71,9 @@ export class User {
     return this.props.updatedAt;
   }
 
-  updateDetails(firstName: string, lastName: string): void {
-    this.props.firstName = firstName.trim();
-    this.props.lastName = lastName.trim();
+  updateDetails(displayName: string, role: string): void {
+    this.props.displayName = displayName.trim();
+    this.props.role = role.trim();
     this.touch();
   }
 

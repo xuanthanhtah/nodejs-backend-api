@@ -42,10 +42,10 @@ export const swaggerDocument = {
     },
   },
   paths: {
-    '/users/register': {
+    '/users': {
       post: {
-        summary: 'Register a new user',
-        tags: ['Auth'],
+        summary: 'Create a new user',
+        tags: ['Users'],
         requestBody: {
           required: true,
           content: {
@@ -64,51 +64,9 @@ export const swaggerDocument = {
           },
         },
         responses: {
-          '201': { description: 'User registered successfully' },
+          '201': { description: 'User created successfully' },
           '400': { description: 'Validation error' },
           '409': { description: 'Email already in use' },
-        },
-      },
-    },
-    '/users/login': {
-      post: {
-        summary: 'Login user',
-        tags: ['Auth'],
-        requestBody: {
-          required: true,
-          content: {
-            'application/json': {
-              schema: {
-                type: 'object',
-                required: ['email', 'password'],
-                properties: {
-                  email: { type: 'string', format: 'email' },
-                  password: { type: 'string' },
-                },
-              },
-            },
-          },
-        },
-        responses: {
-          '200': { description: 'Login successful' },
-          '401': { description: 'Invalid credentials' },
-        },
-      },
-    },
-    '/users': {
-      get: {
-        summary: 'List users',
-        tags: ['Users'],
-        security: [{ bearerAuth: [] }],
-        parameters: [
-          { name: 'page', in: 'query', schema: { type: 'integer' } },
-          { name: 'limit', in: 'query', schema: { type: 'integer' } },
-          { name: 'sortBy', in: 'query', schema: { type: 'string' } },
-          { name: 'order', in: 'query', schema: { type: 'string', enum: ['asc', 'desc'] } },
-          { name: 'q', in: 'query', schema: { type: 'string' } },
-        ],
-        responses: {
-          '200': { description: 'Success' },
         },
       },
     },
@@ -116,7 +74,6 @@ export const swaggerDocument = {
       get: {
         summary: 'Get user by ID',
         tags: ['Users'],
-        security: [{ bearerAuth: [] }],
         parameters: [
           { name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
@@ -125,15 +82,40 @@ export const swaggerDocument = {
           '404': { description: 'User not found' },
         },
       },
+      put: {
+        summary: 'Update user',
+        tags: ['Users'],
+        parameters: [
+          { name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                required: ['firstName', 'lastName'],
+                properties: {
+                  firstName: { type: 'string' },
+                  lastName: { type: 'string' },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          '200': { description: 'Success' },
+          '404': { description: 'User not found' },
+        },
+      },
       delete: {
         summary: 'Delete user',
         tags: ['Users'],
-        security: [{ bearerAuth: [] }],
         parameters: [
           { name: 'id', in: 'path', required: true, schema: { type: 'string', format: 'uuid' } },
         ],
         responses: {
-          '200': { description: 'Success' },
+          '204': { description: 'User deleted successfully' },
           '404': { description: 'User not found' },
         },
       },

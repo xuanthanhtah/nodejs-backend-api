@@ -5,8 +5,8 @@ import { UserResponseDto } from '../dto/user.dto';
 
 export interface UpdateUserCommand {
   id: string;
-  firstName: string;
-  lastName: string;
+  displayName: string;
+  role: string;
 }
 
 export class UpdateUserUseCase {
@@ -20,15 +20,15 @@ export class UpdateUserUseCase {
       throw new UserNotFoundError(userId.value);
     }
 
-    user.updateDetails(command.firstName, command.lastName);
+    user.updateDetails(command.displayName, command.role);
 
     await this.userRepository.save(user);
 
     return {
       id: user.getId().value,
       email: user.getEmail().value,
-      firstName: user.getFirstName(),
-      lastName: user.getLastName(),
+      displayName: user.getDisplayName(),
+      role: user.getRole(),
       isActive: user.isActive(),
       createdAt: user.getCreatedAt().toISOString(),
       updatedAt: user.getUpdatedAt().toISOString(),

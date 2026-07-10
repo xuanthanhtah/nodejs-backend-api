@@ -25,8 +25,8 @@ export class PrismaUserRepository implements IUserRepository {
       data: {
         email: userData.email!,
         password: userData.password!,
-        firstName: userData.firstName!,
-        lastName: userData.lastName!,
+        displayName: userData.displayName!,
+        role: userData.role!,
       },
     });
     return UserMapper.toDomain(userModel);
@@ -36,8 +36,8 @@ export class PrismaUserRepository implements IUserRepository {
     const userModel = await this.prisma.user.update({
       where: { id },
       data: {
-        firstName: userData.firstName,
-        lastName: userData.lastName,
+        displayName: userData.displayName,
+        role: userData.role,
         isActive: userData.isActive,
       },
     });
@@ -55,8 +55,8 @@ export class PrismaUserRepository implements IUserRepository {
     const where = q
       ? {
           OR: [
-            { firstName: { contains: q, mode: 'insensitive' as const } },
-            { lastName: { contains: q, mode: 'insensitive' as const } },
+            { displayName: { contains: q, mode: 'insensitive' as const } },
+            { role: { contains: q, mode: 'insensitive' as const } },
             { email: { contains: q, mode: 'insensitive' as const } },
           ],
         }

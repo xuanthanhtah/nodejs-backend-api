@@ -21,8 +21,8 @@ export class GetUserUseCase {
     return {
       id: user.getId().value,
       email: user.getEmail().value,
-      firstName: user.getFirstName(),
-      lastName: user.getLastName(),
+      displayName: user.getDisplayName(),
+      role: user.getRole(),
       isActive: user.isActive(),
       createdAt: user.getCreatedAt().toISOString(),
       updatedAt: user.getUpdatedAt().toISOString(),

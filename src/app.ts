@@ -62,6 +62,14 @@ export class App {
 
     // API Versioning & Routes
     this.app.use('/api/v1/users', createUserRoutes(prisma));
+    
+    // Auth Routes
+    const { createAuthRoutes } = require('./modules/auth/presentation/http/routes/auth.routes');
+    this.app.use('/api/auth', createAuthRoutes(prisma));
+
+    // Document Routes
+    const { createDocumentRoutes } = require('./modules/document/presentation/http/routes/document.routes');
+    this.app.use('/api/documents', createDocumentRoutes(prisma));
 
     // 404 Route
     this.app.use((req: Request, res: Response, _next: NextFunction) => {

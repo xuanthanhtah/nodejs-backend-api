@@ -7,8 +7,8 @@ import { PasswordService } from '../../../shared/utils/auth-service';
 export interface CreateUserDTO {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  displayName: string;
+  role: string;
 }
 
 export class CreateUserUseCase {

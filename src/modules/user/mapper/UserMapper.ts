@@ -7,8 +7,8 @@ export class UserMapper {
     return new User(
       prismaUser.id,
       prismaUser.email,
-      prismaUser.firstName,
-      prismaUser.lastName,
+      prismaUser.displayName,
+      prismaUser.role,
       prismaUser.isActive,
       prismaUser.createdAt,
       prismaUser.updatedAt,
@@ -20,8 +20,8 @@ export class UserMapper {
     return {
       id: user.id,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      displayName: user.displayName,
+      role: user.role,
       fullName: user.fullName,
       isActive: user.isActive,
       createdAt: user.createdAt,

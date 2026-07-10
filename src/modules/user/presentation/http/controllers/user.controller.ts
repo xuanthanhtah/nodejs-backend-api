@@ -53,8 +53,8 @@ export class UserController {
 
       const result = await this.updateUserUseCase.execute({
         id,
-        firstName: parseResult.data.firstName,
-        lastName: parseResult.data.lastName,
+        displayName: parseResult.data.displayName,
+        role: parseResult.data.role,
       });
 
       res.status(HttpStatusCode.OK).json({

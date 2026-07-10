@@ -1,8 +1,8 @@
 export interface UserResponseDTO {
   id: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  displayName: string;
+  role: string;
   fullName: string;
   isActive: boolean;
   createdAt: Date;

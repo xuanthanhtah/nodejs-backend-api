@@ -4,8 +4,8 @@ import { UserMapper } from '../mapper/UserMapper';
 import { NotFoundError } from '../../../shared/exceptions/ApiErrors';
 
 export interface UpdateUserDTO {
-  firstName?: string;
-  lastName?: string;
+  displayName?: string;
+  role?: string;
   isActive?: boolean;
 }
 

@@ -2,8 +2,8 @@ export class User {
   constructor(
     public readonly id: string,
     public readonly email: string,
-    public readonly firstName: string,
-    public readonly lastName: string,
+    public readonly displayName: string,
+    public readonly role: string,
     public readonly isActive: boolean,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
@@ -11,6 +11,6 @@ export class User {
   ) {}
 
   public get fullName(): string {
-    return `${this.firstName} ${this.lastName}`;
+    return `${this.displayName} ${this.role}`;
   }
 }

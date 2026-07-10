@@ -7,8 +7,8 @@ import { UserResponseDto } from '../dto/user.dto';
 export interface CreateUserCommand {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  displayName: string;
+  role: string;
 }
 
 export class CreateUserUseCase {
@@ -25,8 +25,8 @@ export class CreateUserUseCase {
     const user = User.create({
       email: command.email,
       password: command.password, // In a real scenario, should hash this password
-      firstName: command.firstName,
-      lastName: command.lastName,
+      displayName: command.displayName,
+      role: command.role,
     });
 
     await this.userRepository.save(user);
@@ -34,8 +34,8 @@ export class CreateUserUseCase {
     return {
       id: user.getId().value,
       email: user.getEmail().value,
-      firstName: user.getFirstName(),
-      lastName: user.getLastName(),
+      displayName: user.getDisplayName(),
+      role: user.getRole(),
       isActive: user.isActive(),
       createdAt: user.getCreatedAt().toISOString(),
       updatedAt: user.getUpdatedAt().toISOString(),
